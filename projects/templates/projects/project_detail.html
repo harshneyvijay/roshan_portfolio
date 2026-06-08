@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ project.title }} | Project</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .glass { backdrop-filter: blur(12px); }
+        .card-hover { transition: all .3s ease; }
+        .card-hover:hover { transform: translateY(-4px); }
+    </style>
+
+    <script>
+        if (
+            localStorage.theme === 'dark' ||
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-900 dark:bg-slate-950 dark:text-white">
+
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 glass">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="h-16 flex items-center justify-between">
+
+            <a href="/" class="font-bold text-xl hover:text-cyan-500 transition">
+                ← Portfolio
+            </a>
+
+            <div class="flex items-center gap-4">
+                <span class="hidden sm:inline text-sm px-3 py-1 rounded-full bg-cyan-100 dark:bg-cyan-900/40 text-cyan-600 dark:text-cyan-400 font-medium">
+                    Project
+                </span>
+
+                <a href="{% url 'admin:index' %}"
+                   class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-sm font-medium transition">
+                    admin
+                </a>
+
+                <button id="theme-toggle"
+                        class="p-2 rounded-xl bg-gray-200 dark:bg-slate-800 text-sm font-medium transition hover:bg-gray-300 dark:hover:bg-slate-700">
+                    dark
+                </button>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+<!-- PROJECT CONTENT -->
+<main class="max-w-5xl mx-auto px-6 py-16">
+
+    <!-- Header -->
+    <header class="mb-12">
+        <span class="text-cyan-500 font-semibold uppercase tracking-wider text-sm">Project</span>
+
+        <h1 class="mt-4 text-4xl md:text-5xl font-black leading-tight">
+            {{ project.title }}
+        </h1>
+
+        {% if project.short_description %}
+        <p class="mt-6 text-xl text-gray-600 dark:text-slate-400 leading-relaxed max-w-3xl">
+            {{ project.short_description }}
+        </p>
+        {% endif %}
+
+        <!-- Action buttons -->
+        <div class="mt-8 flex flex-wrap gap-4">
+            {% if project.github_link %}
+            <a href="{{ project.github_link }}"
+               target="_blank"
+               class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 text-white font-semibold transition">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                GitHub
+            </a>
+            {% endif %}
+
+            {% if project.live_link %}
+            <a href="{{ project.live_link }}"
+               target="_blank"
+               class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-cyan-600 hover:bg-cyan-700 text-white font-semibold transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+                Live Demo
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="mt-10 h-px bg-gradient-to-r from-cyan-500 via-cyan-300 to-transparent"></div>
+    </header>
+
+    <!-- Project Image -->
+    {% if project.image %}
+    <div class="mb-12 overflow-hidden rounded-3xl border border-gray-200 dark:border-slate-800 shadow-xl">
+        <img src="{{ project.image.url }}"
+             alt="{{ project.title }}"
+             class="w-full object-cover max-h-[500px]">
+    </div>
+    {% endif %}
+
+    <div class="grid gap-10 lg:grid-cols-3">
+
+        <!-- Description -->
+        <div class="lg:col-span-2">
+            <div class="rounded-3xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
+                <h2 class="text-2xl font-bold mb-6">About This Project</h2>
+                <div class="text-gray-600 dark:text-slate-400 leading-relaxed space-y-4">
+                    {{ project.full_description }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-6">
+
+            <!-- Technologies -->
+            {% if project.technologies %}
+            <div class="rounded-3xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+                <h3 class="font-bold mb-4 text-lg">Technologies</h3>
+                <div class="flex flex-wrap gap-2">
+                    {% for tech in project.technologies.split %}
+                    <span class="px-3 py-1 rounded-lg text-sm font-medium bg-cyan-50 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400 border border-cyan-100 dark:border-cyan-800">
+                        {{ tech }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Links -->
+            <div class="rounded-3xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+                <h3 class="font-bold mb-4 text-lg">Links</h3>
+                <div class="space-y-3">
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blank"
+                       class="flex items-center gap-3 text-gray-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        <span class="truncate">View on GitHub</span>
+                    </a>
+                    {% endif %}
+
+                    {% if project.live_link %}
+                    <a href="{{ project.live_link }}" target="_blank"
+                       class="flex items-center gap-3 text-gray-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        <span class="truncate">Live Demo</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Back button -->
+    <div class="mt-12 pt-8 border-t border-gray-200 dark:border-slate-800">
+        <a href="/"
+           class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-cyan-600 hover:bg-cyan-700 text-white font-semibold transition">
+            ← Back to Portfolio
+        </a>
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="border-t border-gray-200 dark:border-slate-800 mt-8">
+    <div class="max-w-7xl mx-auto px-6 py-10">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm text-gray-500 dark:text-slate-500">Built with Django & Tailwind CSS</p>
+            <div class="text-sm text-gray-500 dark:text-slate-500">© {% now "Y" %} All Rights Reserved.</div>
+        </div>
+    </div>
+</footer>
+
+<!-- THEME TOGGLE -->
+<script>
+const themeToggle = document.getElementById('theme-toggle');
+themeToggle.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.theme = isDark ? 'dark' : 'light';
+    themeToggle.textContent = isDark ? 'light' : 'dark';
+});
+themeToggle.textContent = document.documentElement.classList.contains('dark') ? '☀️' : 'dark';
+</script>
+
+</body>
+</html>
