@@ -1,0 +1,47 @@
+<section
+  data-aos="fade-up"
+  id="resume"
+  class="snap-start px-6 max-w-6xl mx-auto"
+>
+  <div class="w-full rounded-3xl p-8">
+    {% for resume in resumes %}
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-4xl font-black text-black">Resume</h2>
+      <a
+        href="{{ resume.file.url }}"
+        download
+        class="px-5 py-2 rounded-xl bg-orange-500 text-white hover:bg-orange-600 hover:text-black font-semibold"
+      >
+        Download PDF
+      </a>
+    </div>
+
+    <a href="{{ resume.file.url }}" target="_blank" class="group block">
+      <div
+        class="relative w-full rounded-2xl overflow-hidden bg-neutral-900 shadow-2xl transition-all duration-500 group-hover:scale-[1.01] group-hover:-translate-y-2"
+      >
+        {% if resume.preview %}
+
+        <img
+          src="{{ resume.preview.url }}"
+          class="w-full object-cover transition-all duration-500 group-hover:scale-105"
+        />
+
+        {% endif %}
+
+        <!-- Hover Overlay -->
+        <div
+          class="absolute inset-0 bg-white/50 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center"
+        >
+          <div
+            class="px-6 py-3 rounded-full hover:bg-white hover:text-orange-500 font-semibold bg-orange-500 text-white"
+          >
+            View Resume →
+          </div>
+        </div>
+      </div>
+    </a>
+
+    {% endfor %}
+  </div>
+</section>

@@ -1,25 +1,55 @@
 from django.urls import path
-from .views import project_list, project_detail, blog_detail, documents
+
+from .views import (
+    home,
+    project_detail,
+    blog_detail,
+    resume_detail,
+    journey,
+    projects,
+    blogs,
+)
 
 urlpatterns = [
-    path('', project_list, name='project_list'),
-
     path(
-        'project/<int:pk>/',
-        project_detail,
-        name='project_detail'
+        "",
+        home,
+        name="home",
     ),
 
     path(
-    'blog/<int:pk>/',
-    blog_detail,
-    name='blog_detail'
-),
+        "projects/",
+        projects,
+        name="projects",
+    ),
 
-path(
-    'documents/',
-    documents,
-    name='documents'
-),
+    path(
+        "project/<int:pk>/",
+        project_detail,
+        name="project_detail",
+    ),
 
+    path(
+        "blogs/",
+        blogs,
+        name="blogs",
+    ),
+
+    path(
+        "blog/<int:pk>/",
+        blog_detail,
+        name="blog_detail",
+    ),
+
+    path(
+        "resume/<int:pk>/",
+        resume_detail,
+        name="resume_detail",
+    ),
+
+    path(
+        "journey/",
+        journey,
+        name="journey",
+    ),
 ]

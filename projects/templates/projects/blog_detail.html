@@ -1,140 +1,59 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %} {% block title %} {{ blog.title }} | Blog {% endblock%} {% block content %}
 
-    <title>{{ blog.title }} | Blog</title>
+<!-- CONTAINER -->
+<main class="max-w-4xl mx-auto px-6 py-16">
+  <!-- META -->
+  <div class="mb-10">
+    <span
+      class="text-orange-500 text-sm uppercase tracking-wider font-semibold"
+    >
+      Blog Article
+    </span>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <h1 class="text-4xl md:text-5xl font-bold mt-4 leading-tight break-all">
+      {{ blog.title }}
+    </h1>
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    {% if blog.short_description %}
+    <p class="mt-6 text-xl text-black leading-relaxed break-all">
+      {{ blog.short_description }}
+    </p>
+    {% endif %}
 
-    <script>
-        tailwind.config = { darkMode: 'class' }
-    </script>
-
-    <style>
-        body { font-family: 'Roboto', sans-serif; }
-        .glass { backdrop-filter: blur(12px); }
-
-        /* Prose styling for blog content */
-        .blog-content p    { margin-bottom: 1.25rem; line-height: 1.8; }
-        .blog-content h2   { font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1rem; }
-        .blog-content h3   { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 .75rem; }
-        .blog-content ul   { list-style: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; }
-        .blog-content ol   { list-style: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; }
-        .blog-content li   { margin-bottom: .5rem; line-height: 1.7; }
-        .blog-content code { background: #f1f5f9; padding: .1rem .35rem; border-radius: .35rem; font-size: .875rem; }
-        .dark .blog-content code { background: #1e293b; }
-        .blog-content pre  { background: #1e293b; color: #e2e8f0; padding: 1.25rem; border-radius: 1rem; overflow-x: auto; margin-bottom: 1.25rem; font-size: .875rem; }
-        .blog-content a    { color: #0891b2; text-decoration: underline; }
-        .blog-content blockquote {
-            border-left: 4px solid #06b6d4;
-            padding-left: 1rem;
-            color: #64748b;
-            font-style: italic;
-            margin: 1.5rem 0;
-        }
-    </style>
-
-    <script>
-        if (
-            localStorage.theme === 'dark' ||
-            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ) {
-            document.documentElement.classList.add('dark');
-        }
-    </script>
-</head>
-
-<body class="bg-gray-50 text-gray-900 dark:bg-slate-950 dark:text-white">
-
-<!-- NAVBAR -->
-<nav class="sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 glass">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="h-16 flex items-center justify-between">
-
-            <a href="/" class="font-bold text-xl hover:text-cyan-500 transition">
-                Home
-            </a>
-
-            <div class="flex items-center gap-4">
-                <span class="hidden sm:inline text-sm text-gray-500 dark:text-slate-400 px-3 py-1 rounded-full bg-cyan-100 dark:bg-cyan-900/40 text-cyan-600 dark:text-cyan-400 font-medium">
-                    Blog
-                </span>
-
-                <a href="{% url 'admin:index' %}"
-                   class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-sm font-medium transition">
-                    Admin Login
-                </a>
-
-                <button id="theme-toggle"
-                        class="p-2 rounded-xl bg-gray-200 dark:bg-slate-800 text-sm font-medium transition hover:bg-gray-300 dark:hover:bg-slate-700">
-                    dark
-                </button>
-            </div>
-
-        </div>
-    </div>
-</nav>
-
-<!-- BLOG CONTENT -->
-<main class="max-w-3xl mx-auto px-6 py-16">
-
-    <!-- Header -->
-    <header class="mb-12">
-        <span class="text-cyan-500 font-semibold uppercase tracking-wider text-sm">Article</span>
-
-        <h1 class="mt-4 text-4xl md:text-5xl font-black leading-tight">
-            {{ blog.title }}
-        </h1>
-
-        {% if blog.short_description %}
-        <p class="mt-6 text-xl text-gray-600 dark:text-slate-400 leading-relaxed">
-            {{ blog.short_description }}
-        </p>
-        {% endif %}
-
-        <div class="mt-8 h-px bg-gradient-to-r from-cyan-500 via-cyan-300 to-transparent"></div>
-    </header>
-
-    <!-- Body -->
-    <div class="blog-content text-gray-700 dark:text-slate-300">
-        {{ blog.content }}
+    <div class="mt-8 flex items-center gap-4 text-sm text-black">
+      <span>Published</span>
+      <span>•</span>
+      <span>{{ blog.created_at|date:"F d, Y" }}</span>
     </div>
 
-    <!-- Back button -->
-    <div class="mt-16 pt-8 border-t border-gray-200 dark:border-slate-800">
-        <a href="/"
-           class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-cyan-600 hover:bg-cyan-700 text-white font-semibold transition">
-            Back to Home
-        </a>
-    </div>
+    <div
+      class="mt-8 h-px bg-gradient-to-r from-orange-600 via-orange-300 to-transparent"
+    ></div>
+  </div>
 
+  <!-- CONTENT -->
+  <article
+    class="prose prose-invert max-w-none prose-headings:text-black prose-p:text-black prose-li:text-black prose-strong:text-black prose-a:text-orange-400 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-orange-600 prose-blockquote:text-black break-all"
+  >
+    {{ blog.content|safe }}
+  </article>
+
+  <!-- NAV -->
+  <div class="mt-16 pt-8 flex justify-between items-center">
+    <a
+      href="{% url 'home' %}"
+      class="inline-flex items-center px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 hover:text-white text-black font-medium transition"
+    >
+      ← Back to Home
+    </a>
+
+    <a
+        href="{% url 'blogs' %}"
+      class="inline-flex items-center px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 hover:text-white text-black font-medium transition"
+    >
+      More Blogs →
+    </a>
+  </div>
 </main>
 
-<!-- FOOTER -->
-<footer class="border-t border-gray-200 dark:border-slate-800 mt-8">
-    <div class="max-w-7xl mx-auto px-6 py-10">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p class="text-sm text-gray-500 dark:text-slate-500">Built with Django & Tailwind CSS</p>
-            <div class="text-sm text-gray-500 dark:text-slate-500">© {% now "Y" %} All Rights Reserved.</div>
-        </div>
-    </div>
-</footer>
-
-<!-- THEME TOGGLE -->
-<script>
-const themeToggle = document.getElementById('theme-toggle');
-themeToggle.addEventListener('click', () => {
-    document.documentElement.classList.toggle('dark');
-    const isDark = document.documentElement.classList.contains('dark');
-    localStorage.theme = isDark ? 'dark' : 'light';
-    themeToggle.textContent = isDark ? 'light' : 'dark';
-});
-themeToggle.textContent = document.documentElement.classList.contains('dark') ? '☀️' : 'dark';
-</script>
-
-</body>
-</html>
+{% endblock %}

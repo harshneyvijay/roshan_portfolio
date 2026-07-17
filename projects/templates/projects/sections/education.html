@@ -1,0 +1,63 @@
+<section
+  data-aos="fade-up"
+  id="education"
+  class="reveal snap-start px-6 max-w-6xl mx-auto"
+>
+  <div class="rounded-3xl p-8">
+    <h2 class="text-4xl font-black text-black mb-12">Education</h2>
+
+    <div class="relative border-l-2 border-orange-300 pl-12 space-y-14">
+      {% for edu in education %}
+      <div
+        class="timeline-item opacity-0 translate-y-6 transition-all duration-700 ease-out relative"
+      >
+        <!-- DOT -->
+        <div
+          class="absolute -left-[26px] top-2 w-4 h-4 bg-orange-600 rounded-2xl"
+        ></div>
+
+        <h3 class="text-xl font-black text-black">{{ edu.institution }}</h3>
+
+        <p class="mt-2 text-black font-semibold">
+          {{ edu.degree }} • {{ education.from_year }} - {% if education.to_year%} {{ education.to_year }} {% else %} Present {% endif %}
+        </p>
+
+        {% if edu.description %}
+        <p class="mt-3 text-black font-medium">{{ edu.description }}</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  const items = document.querySelectorAll(".timeline-item");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add("opacity-100", "translate-y-0");
+          }, index * 120);
+        }
+      });
+    },
+    {
+      threshold: 0.2,
+    },
+  );
+
+  items.forEach((item) => observer.observe(item));
+</script>
+
+<style>
+  .timeline-active {
+    border-left-color: #06b6d4;
+  }
+
+  .timeline-active h3 {
+    color: #06b6d4;
+  }
+</style>

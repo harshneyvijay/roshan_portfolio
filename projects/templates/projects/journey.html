@@ -1,0 +1,166 @@
+{% extends "base.html" %} {% block title %}Journey | {{ intro.name }}{% endblock%} {% block content %}
+
+<section class="max-w-6xl mx-auto px-6 py-20">
+  <!-- Heading -->
+  <div class="text-center mb-20">
+    <h1 class="text-4xl md:text-5xl font-black text-black">My Journey</h1>
+  </div>
+
+  <!-- ================= MOBILE / TABLET ================= -->
+
+  <div class="relative lg:hidden">
+    <!-- Timeline -->
+    <div
+      class="absolute left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-orange-500 via-black/20 to-transparent"
+    ></div>
+
+    {% for item in journey %}
+
+    <div class="relative mb-14">
+      <!-- Dot -->
+      <div
+        class="absolute left-6 top-8 -translate-x-1/2 w-4 h-4 rounded-full bg-orange-500 border-4 border-black z-20"
+      ></div>
+
+      <!-- Centered Card -->
+      <div class="flex justify-center pl-10">
+        <div
+          class="group w-full max-w-xs sm:max-w-sm md:max-w-md overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-50 via-zinc-400 to-black transition-all duration-500 hover:-translate-y-2 hover:border-orange-500/30 hover:shadow-[0_20px_60px_rgba(14,165,233,.18)]"
+        >
+          {% if item.image %}
+          <img
+            src="{{ item.image.url }}"
+            class="w-full h-44 sm:h-52 object-cover transition duration-500 group-hover:scale-105"
+          />
+          {% endif %}
+
+          <div class="p-5">
+            <div class="flex justify-between items-start gap-3">
+              <h2 class="text-lg sm:text-xl font-bold text-black">
+                {{ item.title }}
+              </h2>
+
+              {% if item.event_date %}
+              <span class="text-sm text-orange-400 blackspace-nowrap">
+                {{ item.event_date|date:"M Y" }}
+              </span>
+              {% endif %}
+            </div>
+
+            <p
+              class="mt-4 text-neutral-800 leading-relaxed text-sm sm:text-base"
+            >
+              {{ item.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+
+  <!-- ================= DESKTOP ================= -->
+
+  <div class="hidden lg:block relative">
+    <!-- Timeline -->
+    <div
+      class="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 bg-gradient-to-b from-orange-500 via-black/20 to-transparent"
+    ></div>
+
+    {% for item in journey %}
+
+    <div class="relative grid grid-cols-2 mb-20 items-start">
+      <!-- Timeline Dot -->
+      <div
+        class="absolute left-1/2 top-8 -translate-x-1/2 w-5 h-5 rounded-full bg-orange-500 border-4 border-black z-20"
+      ></div>
+
+      {% if forloop.counter|divisibleby:2 %}
+
+      <!-- EVEN ITEMS → LEFT -->
+
+      <div class="flex justify-end pr-14">
+        <div
+          class="group w-[500px] overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-50 via-zinc-400 to-black transition-all duration-500 hover:-translate-y-2 hover:border-orange-500/30 hover:shadow-[0_20px_60px_rgba(14,165,233,.18)]"
+        >
+          {% if item.image %}
+          <img
+            src="{{ item.image.url }}"
+            class="w-full h-60 object-cover transition duration-500 group-hover:scale-105"
+          />
+          {% endif %}
+
+          <div class="p-6">
+            <div class="flex justify-between items-start gap-4">
+              <h2 class="text-2xl font-bold text-black">{{ item.title }}</h2>
+
+              {% if item.event_date %}
+              <span class="text-orange-400 blackspace-nowrap">
+                {{ item.event_date|date:"M Y" }}
+              </span>
+              {% endif %}
+            </div>
+
+            <p class="mt-4 text-neutral-800 leading-relaxed">
+              {{ item.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div></div>
+
+      {% else %}
+
+      <!-- ODD ITEMS → RIGHT -->
+
+      <div></div>
+
+      <div class="flex justify-start pl-14">
+        <div
+          class="group w-[500px] overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-50 via-zinc-400 to-black transition-all duration-500 hover:-translate-y-2 hover:border-orange-500/30 hover:shadow-[0_20px_60px_rgba(14,165,233,.18)]"
+        >
+          {% if item.image %}
+          <img
+            src="{{ item.image.url }}"
+            class="w-full h-60 object-cover transition duration-500 group-hover:scale-105"
+          />
+          {% endif %}
+
+          <div class="p-6">
+            <div class="flex justify-between items-start gap-4">
+              <h2 class="text-2xl font-bold text-black">{{ item.title }}</h2>
+
+              {% if item.event_date %}
+              <span class="text-orange-400 blackspace-nowrap">
+                {{ item.event_date|date:"M Y" }}
+              </span>
+              {% endif %}
+            </div>
+
+            <p class="mt-4 text-neutral-800 leading-relaxed">
+              {{ item.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {% endif %}
+    </div>
+
+    {% endfor %}
+  </div>
+
+  {% if not journey %}
+  <div class="py-24 text-center">
+    <h2 class="text-3xl font-bold text-black">No journey entries yet.</h2>
+
+    <p class="mt-3 text-neutral-500">
+      Add milestones from the admin dashboard.
+    </p>
+  </div>
+  {% endif %}
+</section>
+
+{% endblock %}

@@ -1,45 +1,74 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Document
-
-
 from .models import (
     Project,
     Education,
     Skill,
+    SkillCategory,
     Blog,
     Contact,
     Introduction,
     Document,
+    Journey,
 )
 
-def project_list(request):
 
-        resumes = Document.objects.filter(
-        document_type='resume'
+def home(request):
+
+    resumes = Document.objects.filter(
+        document_type="resume",
+        is_active=True,
     )
 
-        certificates = Document.objects.filter(
-        document_type='certificate'
+    certificates = Document.objects.filter(
+        document_type="certificate"
     )
 
-
-        return render(
-            request,
-            'projects/project_list.html',
+    return render(
+        request,
+        "projects/home.html",
         {
-            'projects': Project.objects.all(),
-            'education': Education.objects.all(),
-            'skills': Skill.objects.all(),
-            'blogs': Blog.objects.all(),
-            'contact': Contact.objects.first(),
-            'intro': Introduction.objects.first(),
-            'resumes':resumes,
-            'certificates':certificates,
-        }
+            "projects": Project.objects.filter(
+                show_on_homepage=True
+            ),
+            "education": Education.objects.all(),
+            "skill_categories": SkillCategory.objects.prefetch_related("skills").all(),
+            "blogs": Blog.objects.filter(
+                show_on_homepage=True
+            ),
+            "contact": Contact.objects.first(),
+            "intro": Introduction.objects.first(),
+            "resumes": resumes,
+            "certificates": certificates,
+        },
+    )
+
+
+def projects(request):
+
+    return render(
+        request,
+        "projects/projects.html",
+        {
+            "projects": Project.objects.all(),
+            "intro": Introduction.objects.first(),
+        },
+    )
+
+
+def blogs(request):
+
+    return render(
+        request,
+        "projects/blogs.html",
+        {
+            "blogs": Blog.objects.all(),
+            "intro": Introduction.objects.first(),
+        },
     )
 
 
 def project_detail(request, pk):
+
     project = get_object_or_404(
         Project,
         pk=pk
@@ -47,11 +76,13 @@ def project_detail(request, pk):
 
     return render(
         request,
-        'projects/project_detail.html',
+        "projects/project_detail.html",
         {
-            'project': project
-        }
+            "project": project,
+            "intro": Introduction.objects.first(),
+        },
     )
+
 
 def blog_detail(request, pk):
 
@@ -62,16 +93,41 @@ def blog_detail(request, pk):
 
     return render(
         request,
-        'projects/blog_detail.html',
+        "projects/blog_detail.html",
         {
-            'blog': blog
-        }
+            "blog": blog,
+            "intro": Introduction.objects.first(),
+        },
     )
 
-def documents(request):
-    docs = Document.objects.all()
+
+def resume_detail(request, pk):
+
+    resume = get_object_or_404(
+        Document,
+        pk=pk,
+        document_type="resume",
+    )
+
     return render(
         request,
-        'project_list.html',
-        {'documents': docs}
+        "projects/resume_detail.html",
+        {
+            "resume": resume,
+            "intro": Introduction.objects.first(),
+        },
+    )
+
+
+def journey(request):
+
+    journey = Journey.objects.order_by("-event_date")
+
+    return render(
+        request,
+        "projects/journey.html",
+        {
+            "journey": journey,
+            "intro": Introduction.objects.first(),
+        },
     )

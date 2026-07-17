@@ -1,0 +1,268 @@
+</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Portfolio{% endblock %}</title>
+<!-- Fonts -->
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<!-- AOS -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors:{
+primary:"#06b6d4"
+}
+}
+}
+}
+</script>
+<style>
+html{
+scroll-behavior:smooth;
+overflow-x:hidden;
+}
+body{
+font-family:'Satoshi',sans-serif;
+}
+</style>
+</head>
+<body class="bg-mist-50 text-black">
+<!-- ================= DESKTOP NAVBAR ================= -->
+<nav id="desktop-navbar"
+class="hidden md:block fixed top-0 left-0 w-full z-40
+bg-orange-500/90 backdrop-blur-xl
+border-b border-white/10
+transition-transform duration-300">
+<div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+<a href="/" 
+class="text-2xl font-black hover:text-white transition">
+{{ intro.name }}
+</a>
+<div class="flex gap-8 text-sm font-semibold">
+<a href="/#projects" class="hover:text-white transition">
+Projects
+</a>
+<a href="/#blogs" class="hover:text-white transition">
+Blogs
+</a>
+<a href="/#skills" class="hover:text-white transition">
+Skills
+</a>
+<a href="/#education" class="hover:text-white transition">
+Education
+</a>
+<a href="/#resume" class="hover:text-white transition">
+Resume
+</a>
+<a href="/#certifications" class="hover:text-white transition">
+Certificates
+</a>
+<a href="{% url 'journey' %}" class="hover:text-white transition">
+Journey
+</a>
+<a href="/#contact" class="hover:text-white transition">
+Contact
+</a>
+<a href="/admin" class="hover:text-white transition">
+Admin
+</a>
+</div>
+</div>
+</nav>
+<!-- ================= MOBILE / COMPACT NAVBAR ================= -->
+<header id="compact-navbar"
+class="fixed top-0 left-0 w-full z-50
+bg-orange-500/90 backdrop-blur-xl
+border-b border-white/10
+transition-transform duration-300
+translate-y-0 md:-translate-y-full">
+<div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+<a href="/"
+class="text-2xl font-black hover:text-white transition">
+{{ intro.name }}
+</a>
+<details id="compact-menu-wrap" class="relative">
+<summary
+class="list-none text-3xl hover:text-white transition cursor-pointer select-none"
+id="compact-menu-btn">
+<i class="fa-solid fa-bars"></i>
+</summary>
+<div id="compact-menu"
+class="absolute right-0 top-full mt-4
+w-64 rounded-2xl
+bg-orange-500/90
+overflow-hidden
+z-[9999]">
+<a href="/#projects"
+class="block px-5 py-3 hover:bg-white/20 hover:font-bold">
+Projects
+</a>
+<a href="/#blogs"
+class="block px-5 py-3 hover:bg-white/20 hover:font-bold">
+Blogs
+</a>
+<a href="/#skills"
+class="block px-5 py-3 hover:bg-white/20 hover:font-bold">
+Skills
+</a>
+<a href="/#education"
+class="block px-5 py-3 hover:bg-white/20 hover:font-bold">
+Education
+</a>
+<a href="/#resume"
+class="block px-5 py-3 hover:bg-white/20 hover:font-bold">
+Resume
+</a>
+<a href="/#certifications"
+class="block px-5 py-3 hover:bg-white/20 hover:font-bold">
+Certificates
+</a>
+<a href="{% url 'journey' %}"
+class="block px-5 py-3 hover:bg-white/20 hover:font-bold">
+Journey
+</a>
+<a href="/#contact"
+class="block px-5 py-3 hover:bg-white/20 hover:font-bold">
+Contact
+</a>
+<a href="/admin"
+class="block px-5 py-3 hover:bg-white/20 hover:font-bold">
+Admin
+</a>
+</div>
+</details>
+</div>
+</header>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+(function(){
+
+AOS.init({
+    duration:800,
+    once:true,
+    offset:100
+});
+
+
+const desktopNavbar =
+document.getElementById("desktop-navbar");
+
+const compactNavbar =
+document.getElementById("compact-navbar");
+
+const menuWrap =
+document.getElementById("compact-menu-wrap");
+
+
+
+function updateNavbar(){
+
+
+    // Mobile + Tablet
+    if(window.innerWidth < 768){
+
+        desktopNavbar.classList.add("hidden");
+
+        compactNavbar.classList.remove(
+            "md:-translate-y-full"
+        );
+
+        return;
+    }
+
+
+
+    // Desktop
+
+    desktopNavbar.classList.remove("hidden");
+
+
+    if(window.scrollY > 120){
+
+
+        // hide full navbar
+
+        desktopNavbar.classList.add(
+            "-translate-y-full"
+        );
+
+
+        // show dropdown
+
+        compactNavbar.classList.remove(
+            "md:-translate-y-full"
+        );
+
+
+    }
+
+    else{
+
+
+        // show full navbar
+
+        desktopNavbar.classList.remove(
+            "-translate-y-full"
+        );
+
+
+        // hide dropdown
+
+        compactNavbar.classList.add(
+            "md:-translate-y-full"
+        );
+
+
+        menuWrap.removeAttribute("open");
+
+    }
+
+}
+
+
+
+
+window.addEventListener(
+"scroll",
+updateNavbar
+);
+
+
+window.addEventListener(
+"resize",
+updateNavbar
+);
+
+
+document.addEventListener(
+"click",
+function(e){
+
+if(!menuWrap.contains(e.target)){
+
+menuWrap.removeAttribute("open");
+
+}
+
+});
+
+
+updateNavbar();
+
+
+})();
+</script>
+<main class="pt-20 md:pt-0">
+{% block content %}
+{% endblock %}
+</main>
+</html>

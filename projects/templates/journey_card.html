@@ -1,0 +1,20 @@
+{% if item.image %}
+<img
+  src="{{ item.image.url }}"
+  class="w-full h-56 object-cover transition duration-500 group-hover:scale-105"
+/>
+{% endif %}
+
+<div class="p-6">
+  <div class="flex justify-between items-center gap-3">
+    <h2 class="text-2xl font-bold text-black">{{ item.title }}</h2>
+
+    {% if item.event_date %}
+    <span class="text-orange-400 blackspace-nowrap">
+      {{ item.event_date|date:"M Y" }}
+    </span>
+    {% endif %}
+  </div>
+
+  <p class="mt-4 text-neutral-800 leading-relaxed">{{ item.description }}</p>
+</div>

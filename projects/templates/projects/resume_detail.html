@@ -1,0 +1,30 @@
+<h1>{{ resume.title }}</h1>
+
+<p>File name: {{ resume.file.name }}</p>
+<p>File URL: {{ resume.file.url }}</p>
+<p>Extension: {{ resume.extension }}</p>
+<p>Is PDF: {{ resume.is_pdf }}</p>
+<p>Is Image: {{ resume.is_image }}</p>
+
+<hr />
+
+{% if resume.is_pdf %}
+<p>Rendering PDF...</p>
+<!-- <embed src="{{ resume.file.url }}" type="application/pdf" width="100%" height="800"> -->
+<object
+  data="{{ resume.file.url }}"
+  type="application/pdf"
+  width="100%"
+  height="900"
+>
+  <p>
+    Your browser cannot display PDFs.
+    <a href="{{ resume.file.url }}" target="_blank">Open PDF</a>
+  </p>
+</object>
+{% elif resume.is_image %}
+<p>Rendering Image...</p>
+<img src="{{ resume.file.url }}" width="600" />
+{% else %}
+<p>Unknown file type</p>
+{% endif %}
