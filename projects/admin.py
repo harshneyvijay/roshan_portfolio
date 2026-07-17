@@ -6,6 +6,7 @@ admin.site.site_title = "Portfolio Admin"
 admin.site.index_title = "Manage Your Portfolio"
 
 from .models import (
+    Intro,
     Project,
     Education,
     Skill,
@@ -18,6 +19,7 @@ from .models import (
     SkillCategory
 )
 
+admin.site.register(Intro)
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
