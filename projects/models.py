@@ -1,6 +1,13 @@
 import os
 from django.db import models
 
+class Intro(models.Model):
+    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    photo = models.ImageField(upload_to='intro_photos/', blank=True, null=True)
+    
+
 class Project(models.Model):
     title = models.CharField(max_length=200)
 
