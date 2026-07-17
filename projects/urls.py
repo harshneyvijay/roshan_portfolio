@@ -10,15 +10,7 @@ from .views import (
     blogs,
 )
 
-from django.contrib import admin
-from django.urls import path
-
-from projects.views import create_admin
-
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("create-admin/", create_admin),
-    
     path(
         "",
         home,
