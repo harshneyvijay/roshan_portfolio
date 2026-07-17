@@ -11,6 +11,10 @@ from .models import (
     Journey,
 )
 
+def hero(request):
+    intro = Intro.objects.first()  # or however you fetch it
+    return render(request, 'hero.html', {'intro': intro})
+
 def home(request):
 
     resumes = Document.objects.filter(
