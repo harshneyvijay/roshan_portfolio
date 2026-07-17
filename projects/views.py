@@ -11,6 +11,31 @@ from .models import (
     Journey,
 )
 
+import os
+
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+
+
+def create_admin(request):
+    User = get_user_model()
+
+    username = os.environ.get("ADMIN_USERNAME")
+    password = os.environ.get("ADMIN_PASSWORD")
+
+    if not username or not password:
+        return HttpResponse("Admin credentials not configured")
+
+    if not User.objects.filter(username=username).exists():
+        User.objects.create_superuser(
+            username=username,
+            password=password
+        )
+
+        return HttpResponse("Admin created successfully")
+
+    return HttpResponse("Admin already exists")
+
 
 def home(request):
 
