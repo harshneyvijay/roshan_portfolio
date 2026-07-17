@@ -4,14 +4,7 @@
     <meta charset="UTF-8" />
     <title>Orbital Hero</title>
     <style>
-      /* ---------------------------------------------------------
-     BASE
-  --------------------------------------------------------- */
-      html,
-      body {
-        margin: 0;
-        overflow-x: hidden;
-      }
+      html, body { margin: 0; overflow-x: hidden; }
 
       .hero {
         position: relative;
@@ -19,47 +12,114 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        /* background: radial-gradient(ellipse at center, #d8dbe1 0%, #ecdac9 70%); */
         perspective: 1200px;
         overflow: hidden;
       }
 
-      /* faint stars */
+      .hero-inner {
+        position: relative;
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6rem;
+        padding: 0 3rem;
+      }
+
+      /* stars */
       .stars {
         position: absolute;
         inset: 0;
         background-image:
-          radial-gradient(
-            1px 1px at 20% 30%,
-            rgba(95, 87, 87, 0.574),
-            transparent
-          ),
+          radial-gradient(1px 1px at 20% 30%, rgba(95, 87, 87, 0.574), transparent),
           radial-gradient(1px 1px at 70% 60%, rgb(120, 97, 97), transparent),
-          radial-gradient(
-            1px 1px at 40% 80%,
-            rgba(70, 57, 57, 0.3),
-            transparent
-          ),
+          radial-gradient(1px 1px at 40% 80%, rgba(70, 57, 57, 0.3), transparent),
           radial-gradient(1px 1px at 85% 20%, rgb(77, 53, 53), transparent),
           radial-gradient(1px 1px at 55% 15%, rgb(37, 24, 24), transparent),
-          radial-gradient(
-            1px 1px at 10% 65%,
-            rgba(76, 60, 60, 0.64),
-            transparent
-          ),
-          radial-gradient(
-            1px 1px at 90% 85%,
-            rgba(33, 27, 27, 0.547),
-            transparent
-          );
+          radial-gradient(1px 1px at 10% 65%, rgba(76, 60, 60, 0.64), transparent),
+          radial-gradient(1px 1px at 90% 85%, rgba(33, 27, 27, 0.547), transparent);
         background-size: 100% 100%;
         opacity: 1;
         pointer-events: none;
       }
 
       /* ---------------------------------------------------------
-     ORBIT SYSTEM (this is the element that tilts in 3D)
-  --------------------------------------------------------- */
+         LEFT: photo only
+      --------------------------------------------------------- */
+      .photo-col {
+        position: relative;
+        z-index: 10;
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .photo-frame {
+        flex: 0 0 auto;
+        width: 220px;
+        height: 280px;
+        border-radius: 28px;
+        overflow: hidden;
+        border: 2px solid rgba(248, 184, 56, 0.5);
+        box-shadow:
+          0 0 0 6px rgba(248, 184, 56, 0.08),
+          0 0 40px rgba(248, 165, 56, 0.25);
+        background: #eee;
+      }
+      .photo-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* ---------------------------------------------------------
+         RIGHT: orbit system with name/description centered inside it
+      --------------------------------------------------------- */
+      .orbit-col {
+        position: relative;
+        flex: 1 1 480px;
+        max-width: 480px;
+        height: 480px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .center-text {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        max-width: 22rem;
+        padding: 0 1rem;
+      }
+
+      .center-text h1 {
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        color: #000000;
+        text-shadow: 0 0 40px rgba(248, 165, 56, 0.352);
+        margin: 0;
+        font-size: 2.75rem;
+      }
+
+      .center-text .title {
+        color: #2e2c2c;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 1rem;
+        margin-top: 0.75rem;
+      }
+
+      .center-text .desc {
+        color: #c76f1d;
+        margin: 1rem 0 0;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
       .orbit-system {
         position: absolute;
         top: 50%;
@@ -67,11 +127,9 @@
         width: 1px;
         height: 1px;
         transform-style: preserve-3d;
-        /* Base "Saturn" tilt: viewing the ring plane at a steep angle turns the
-       circular rings into ellipses. Mouse movement adds a small delta on
-       top of this base tilt (see JS). */
         transform: translate(-50%, -50%) rotateX(60deg) rotateY(0deg);
         will-change: transform;
+        z-index: 1;
       }
 
       .ring {
@@ -85,62 +143,37 @@
       }
 
       .ring-1 {
-        width: 340px;
-        height: 340px;
-        margin: -170px 0 0 -170px;
+        width: 220px; height: 220px; margin: -110px 0 0 -110px;
         border-color: rgba(255, 255, 255, 0.16);
         box-shadow: 0 0 20px rgba(248, 168, 56, 0.06);
         animation: spin-cw 26s linear infinite;
       }
       .ring-2 {
-        width: 480px;
-        height: 480px;
-        margin: -240px 0 0 -240px;
+        width: 310px; height: 310px; margin: -155px 0 0 -155px;
         border-color: rgba(248, 184, 56, 0.428);
         box-shadow: 0 0 24px rgba(248, 194, 56, 0.08);
         animation: spin-ccw 38s linear infinite;
       }
       .ring-3 {
-        width: 620px;
-        height: 620px;
-        margin: -310px 0 0 -310px;
+        width: 400px; height: 400px; margin: -200px 0 0 -200px;
         border-color: rgba(118, 88, 72, 0.197);
         box-shadow: 0 0 28px rgba(248, 203, 56, 0.06);
         animation: spin-cw 52s linear infinite;
       }
       .ring-4 {
-        width: 760px;
-        height: 760px;
-        margin: -380px 0 0 -380px;
+        width: 480px; height: 480px; margin: -240px 0 0 -240px;
         border-color: rgba(248, 213, 56, 0.458);
         box-shadow: 0 0 32px rgba(248, 187, 56, 0.05);
         animation: spin-ccw 68s linear infinite;
       }
 
-      @keyframes spin-cw {
-        from {
-          transform: rotateZ(0deg);
-        }
-        to {
-          transform: rotateZ(360deg);
-        }
-      }
-      @keyframes spin-ccw {
-        from {
-          transform: rotateZ(0deg);
-        }
-        to {
-          transform: rotateZ(-360deg);
-        }
-      }
+      @keyframes spin-cw { from { transform: rotateZ(0deg); } to { transform: rotateZ(360deg); } }
+      @keyframes spin-ccw { from { transform: rotateZ(0deg); } to { transform: rotateZ(-360deg); } }
 
-      /* satellites: separate rotating layer so the glow itself doesn't rotate/distort */
       .satellite {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 6px;
-        height: 6px;
+        top: 50%; left: 50%;
+        width: 6px; height: 6px;
         margin: -3px 0 0 -3px;
         border-radius: 50%;
         background: #efefeff6;
@@ -150,173 +183,83 @@
           0 0 28px 10px rgb(246, 152, 70);
       }
 
-      .sat-a1 {
-        animation: orbit-a1 22s linear infinite;
-      }
-      .sat-b1 {
-        animation: orbit-b1 34s linear infinite reverse;
-      }
-      .sat-b2 {
-        animation: orbit-b1 34s linear infinite reverse;
-        animation-delay: -17s;
-      }
-      .sat-c1 {
-        animation: orbit-c1 48s linear infinite;
-      }
-      .sat-d1 {
-        animation: orbit-d1 64s linear infinite reverse;
-      }
+      .sat-a1 { animation: orbit-a1 22s linear infinite; }
+      .sat-b1 { animation: orbit-b1 34s linear infinite reverse; }
+      .sat-b2 { animation: orbit-b1 34s linear infinite reverse; animation-delay: -17s; }
+      .sat-c1 { animation: orbit-c1 48s linear infinite; }
+      .sat-d1 { animation: orbit-d1 64s linear infinite reverse; }
 
-      @keyframes orbit-a1 {
-        from {
-          transform: rotateZ(0deg) translateX(170px) rotateZ(0deg);
-        }
-        to {
-          transform: rotateZ(360deg) translateX(170px) rotateZ(-360deg);
-        }
-      }
-      @keyframes orbit-b1 {
-        from {
-          transform: rotateZ(0deg) translateX(240px) rotateZ(0deg);
-        }
-        to {
-          transform: rotateZ(360deg) translateX(240px) rotateZ(-360deg);
-        }
-      }
-      @keyframes orbit-c1 {
-        from {
-          transform: rotateZ(0deg) translateX(310px) rotateZ(0deg);
-        }
-        to {
-          transform: rotateZ(360deg) translateX(310px) rotateZ(-360deg);
-        }
-      }
-      @keyframes orbit-d1 {
-        from {
-          transform: rotateZ(0deg) translateX(380px) rotateZ(0deg);
-        }
-        to {
-          transform: rotateZ(360deg) translateX(380px) rotateZ(-360deg);
-        }
-      }
+      @keyframes orbit-a1 { from { transform: rotateZ(0deg) translateX(110px) rotateZ(0deg); } to { transform: rotateZ(360deg) translateX(110px) rotateZ(-360deg); } }
+      @keyframes orbit-b1 { from { transform: rotateZ(0deg) translateX(155px) rotateZ(0deg); } to { transform: rotateZ(360deg) translateX(155px) rotateZ(-360deg); } }
+      @keyframes orbit-c1 { from { transform: rotateZ(0deg) translateX(200px) rotateZ(0deg); } to { transform: rotateZ(360deg) translateX(200px) rotateZ(-360deg); } }
+      @keyframes orbit-d1 { from { transform: rotateZ(0deg) translateX(240px) rotateZ(0deg); } to { transform: rotateZ(360deg) translateX(240px) rotateZ(-360deg); } }
 
-      /* ---------------------------------------------------------
-     CENTER TEXT — stays stable, sits above the orbit system
-  --------------------------------------------------------- */
-      .center-text {
-        position: relative;
-        z-index: 10;
-        text-align: center;
-        padding: 0 1.5rem;
-      }
-
-      .center-text h1 {
-        font-weight: 900;
-        letter-spacing: -0.02em;
-        color: #000000;
-        text-shadow: 0 0 40px rgba(248, 165, 56, 0.352);
-      }
-
-      .center-text .title {
-        color: #2e2c2c;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        font-size: 1rem;
-        margin-top: 0.75rem;
-      }
-
-      .center-text .desc {
-        color: #c76f1d;
-        max-width: 32rem;
-        margin: 1rem auto 0;
-        font-size: 1rem;
-        line-height: 1.6;
-      }
-
-      /* ---------------------------------------------------------
-     REDUCED MOTION
-  --------------------------------------------------------- */
       @media (prefers-reduced-motion: reduce) {
-        .ring,
-        .satellite {
-          animation: none !important;
-        }
-        .orbit-system {
-          transition: none !important;
-          transform: translate(-50%, -50%) !important;
-        }
+        .ring, .satellite { animation: none !important; }
+        .orbit-system { transition: none !important; transform: translate(-50%, -50%) !important; }
       }
 
-      @media (max-width: 768px) {
-        .ring-3,
-        .ring-4,
-        .sat-c1,
-        .sat-d1 {
-          display: none;
-        }
+      @media (max-width: 900px) {
+        .hero-inner { flex-direction: column; padding: 2rem 1.5rem; gap: 1.5rem; }
+        .photo-col { order: 1; }
+        .orbit-col { order: 2; width: 320px; height: 320px; max-width: 320px; }
+        .ring-3, .ring-4, .sat-c1, .sat-d1 { display: none; }
       }
     </style>
   </head>
   <body>
     <section class="hero" id="hero">
-      <div class="w-full rounded-3xl p-8">
-        <div class="stars"></div>
-
-        <!-- Orbital system: rings + satellites, tilts toward cursor -->
-        <div class="orbit-system" id="orbitSystem">
-          <div class="ring ring-1"><div class="satellite sat-a1"></div></div>
-          <div class="ring ring-2">
-            <div class="satellite sat-b1"></div>
-            <div class="satellite sat-b2"></div>
+      <div class="stars"></div>
+      <div class="hero-inner">
+        <!-- LEFT: photo -->
+        <div class="photo-col">
+          <div class="photo-frame">
+            <img src="{{ intro.photo.url }}" alt="{{ intro.name }}" />
           </div>
-          <div class="ring ring-3"><div class="satellite sat-c1"></div></div>
-          <div class="ring ring-4"><div class="satellite sat-d1"></div></div>
         </div>
 
-        <!-- Stable centered text -->
-        <div class="center-text">
-          <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-2">
-            {{intro.name}}
-          </h1>
-          <h2 class="title">{{intro.title}}</h2>
-          <p class="desc">{{intro.description}}</p>
+        <!-- RIGHT: orbit system with text centered inside -->
+        <div class="orbit-col">
+          <div class="orbit-system" id="orbitSystem">
+            <div class="ring ring-1"><div class="satellite sat-a1"></div></div>
+            <div class="ring ring-2">
+              <div class="satellite sat-b1"></div>
+              <div class="satellite sat-b2"></div>
+            </div>
+            <div class="ring ring-3"><div class="satellite sat-c1"></div></div>
+            <div class="ring ring-4"><div class="satellite sat-d1"></div></div>
+          </div>
+          <div class="center-text">
+            <h1>{{intro.name}}</h1>
+            <h2 class="title">{{intro.title}}</h2>
+            <p class="desc">{{intro.description}}</p>
+          </div>
         </div>
       </div>
     </section>
 
     <script>
-      // -----------------------------------------------------------
-      // 3D tilt on mouse move, smoothed via lerp + requestAnimationFrame.
-      // Only the orbit system (.orbit-system) is tilted; text stays put.
-      // -----------------------------------------------------------
       (function () {
         const hero = document.getElementById("hero");
         const system = document.getElementById("orbitSystem");
 
-        const reduceMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)",
-        ).matches;
-        if (reduceMotion) return; // skip all JS tilt logic
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduceMotion) return;
 
-        const BASE_TILT = 60; // static "Saturn ring" viewing angle on X
-        const MAX_TILT = 25; // max additional degrees of mouse-driven tilt
-        let targetX = 0,
-          targetY = 0; // desired tilt delta
-        let currentX = 0,
-          currentY = 0; // smoothed tilt delta
+        const BASE_TILT = 60;
+        const MAX_TILT = 25;
+        let targetX = 0, targetY = 0;
+        let currentX = 0, currentY = 0;
         const EASE = 0.08;
 
         hero.addEventListener("mousemove", (e) => {
           const rect = hero.getBoundingClientRect();
-          const px = (e.clientX - rect.left) / rect.width; // 0..1
-          const py = (e.clientY - rect.top) / rect.height; // 0..1
-
-          // Map to -1..1, then to degrees
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
           const nx = px * 2 - 1;
           const ny = py * 2 - 1;
-
-          targetY = nx * MAX_TILT; // horizontal movement -> rotateY
-          targetX = -ny * MAX_TILT; // vertical movement -> adds/subtracts from base rotateX
+          targetY = nx * MAX_TILT;
+          targetX = -ny * MAX_TILT;
         });
 
         hero.addEventListener("mouseleave", () => {
@@ -325,12 +268,9 @@
         });
 
         function animate() {
-          // Smooth interpolation (easing) toward target angles
           currentX += (targetX - currentX) * EASE;
           currentY += (targetY - currentY) * EASE;
-
           system.style.transform = `translate(-50%, -50%) rotateX(${BASE_TILT + currentX}deg) rotateY(${currentY}deg)`;
-
           requestAnimationFrame(animate);
         }
         requestAnimationFrame(animate);
