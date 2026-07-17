@@ -8,10 +8,10 @@ media/
 
 venv/
 .venv/
-nodemodules/
+node_modules/
 .idea/
 .vscode/
-
+migrations/
 static/
 
 *.log
