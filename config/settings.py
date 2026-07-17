@@ -7,6 +7,8 @@ from pathlib import Path
 
 import dj_database_url
 
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,10 +18,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # ============================================================
 
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "django-insecure-z4orn6nefg@%@*mwyl*qzf=+ui1v7ynzo8z)qhgls3_=gh-f4h"
-)
+load_dotenv()
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
+DEBUG = os.environ.get("DEBUG", "True") == "True"
 
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 
