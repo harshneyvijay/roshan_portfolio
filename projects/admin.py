@@ -69,9 +69,9 @@ class SkillCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ("name", "category", "level")
-    list_filter = ("category", "level")
-    search_fields = ("name",)
+    list_display = ("name", "category")
+    list_filter = ("category")
+    search_fields = ("name")
 
 
 @admin.register(Document)
