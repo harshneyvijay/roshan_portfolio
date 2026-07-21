@@ -1,12 +1,24 @@
 import os
 from django.db import models
 
-class Intro(models.Model):
-    name = models.CharField(max_length=100)
-    title = models.CharField(max_length=100)
+
+class Introduction(models.Model):
+
+    name = models.CharField(
+        max_length=100
+    )
+
+    title = models.CharField(
+        max_length=200
+    )
+
     description = models.TextField()
-    photo = models.ImageField(upload_to='intro_photos/', blank=True, null=True)
     
+    photo = models.ImageField(upload_to='intro_photos/', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
 
 class Project(models.Model):
     title = models.CharField(max_length=200)
@@ -164,23 +176,7 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.email
-    
 
-class Introduction(models.Model):
-
-    name = models.CharField(
-        max_length=100
-    )
-
-    title = models.CharField(
-        max_length=200
-    )
-
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
-    
 
 class Document(models.Model):
 
