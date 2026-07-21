@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orbital Hero</title>
     <style>
-      html, body { margin: 0; overflow-x: hidden; }
+      html,
+      body {
+        margin: 0;
+        overflow-x: hidden;
+      }
 
       .hero {
         position: relative;
@@ -33,13 +37,29 @@
         position: absolute;
         inset: 0;
         background-image:
-          radial-gradient(1px 1px at 20% 30%, rgba(95, 87, 87, 0.574), transparent),
+          radial-gradient(
+            1px 1px at 20% 30%,
+            rgba(95, 87, 87, 0.574),
+            transparent
+          ),
           radial-gradient(1px 1px at 70% 60%, rgb(120, 97, 97), transparent),
-          radial-gradient(1px 1px at 40% 80%, rgba(70, 57, 57, 0.3), transparent),
+          radial-gradient(
+            1px 1px at 40% 80%,
+            rgba(70, 57, 57, 0.3),
+            transparent
+          ),
           radial-gradient(1px 1px at 85% 20%, rgb(77, 53, 53), transparent),
           radial-gradient(1px 1px at 55% 15%, rgb(37, 24, 24), transparent),
-          radial-gradient(1px 1px at 10% 65%, rgba(76, 60, 60, 0.64), transparent),
-          radial-gradient(1px 1px at 90% 85%, rgba(33, 27, 27, 0.547), transparent);
+          radial-gradient(
+            1px 1px at 10% 65%,
+            rgba(76, 60, 60, 0.64),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 90% 85%,
+            rgba(33, 27, 27, 0.547),
+            transparent
+          );
         background-size: 100% 100%;
         opacity: 1;
         pointer-events: none;
@@ -139,19 +159,38 @@
         background: #c76f1d;
         animation: blink-caret 0.85s step-end infinite;
       }
-      .desc-cursor.done { animation: blink-caret 0.85s step-end 4; opacity: 0; animation-fill-mode: forwards; }
+      .desc-cursor.done {
+        animation: blink-caret 0.85s step-end 4;
+        opacity: 0;
+        animation-fill-mode: forwards;
+      }
 
       @keyframes blink-caret {
-        from, to { opacity: 1; }
-        50% { opacity: 0; }
+        from,
+        to {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
       }
       @keyframes fade-in-desc {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
       @keyframes fade-up {
-        from { opacity: 0; transform: translateY(6px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       .orbit-system {
@@ -177,37 +216,61 @@
       }
 
       .ring-1 {
-        width: 220px; height: 220px; margin: -110px 0 0 -110px;
+        width: 220px;
+        height: 220px;
+        margin: -110px 0 0 -110px;
         border-color: rgba(255, 255, 255, 0.16);
         box-shadow: 0 0 20px rgba(248, 168, 56, 0.06);
         animation: spin-cw 26s linear infinite;
       }
       .ring-2 {
-        width: 310px; height: 310px; margin: -155px 0 0 -155px;
+        width: 310px;
+        height: 310px;
+        margin: -155px 0 0 -155px;
         border-color: rgba(248, 184, 56, 0.428);
         box-shadow: 0 0 24px rgba(248, 194, 56, 0.08);
         animation: spin-ccw 38s linear infinite;
       }
       .ring-3 {
-        width: 400px; height: 400px; margin: -200px 0 0 -200px;
+        width: 400px;
+        height: 400px;
+        margin: -200px 0 0 -200px;
         border-color: rgba(118, 88, 72, 0.197);
         box-shadow: 0 0 28px rgba(248, 203, 56, 0.06);
         animation: spin-cw 52s linear infinite;
       }
       .ring-4 {
-        width: 480px; height: 480px; margin: -240px 0 0 -240px;
+        width: 480px;
+        height: 480px;
+        margin: -240px 0 0 -240px;
         border-color: rgba(248, 213, 56, 0.458);
         box-shadow: 0 0 32px rgba(248, 187, 56, 0.05);
         animation: spin-ccw 68s linear infinite;
       }
 
-      @keyframes spin-cw { from { transform: rotateZ(0deg); } to { transform: rotateZ(360deg); } }
-      @keyframes spin-ccw { from { transform: rotateZ(0deg); } to { transform: rotateZ(-360deg); } }
+      @keyframes spin-cw {
+        from {
+          transform: rotateZ(0deg);
+        }
+        to {
+          transform: rotateZ(360deg);
+        }
+      }
+      @keyframes spin-ccw {
+        from {
+          transform: rotateZ(0deg);
+        }
+        to {
+          transform: rotateZ(-360deg);
+        }
+      }
 
       .satellite {
         position: absolute;
-        top: 50%; left: 50%;
-        width: 6px; height: 6px;
+        top: 50%;
+        left: 50%;
+        width: 6px;
+        height: 6px;
         margin: -3px 0 0 -3px;
         border-radius: 50%;
         background: #efefeff6;
@@ -217,22 +280,73 @@
           0 0 28px 10px rgb(246, 152, 70);
       }
 
-      .sat-a1 { animation: orbit-a1 22s linear infinite; }
-      .sat-b1 { animation: orbit-b1 34s linear infinite reverse; }
-      .sat-b2 { animation: orbit-b1 34s linear infinite reverse; animation-delay: -17s; }
-      .sat-c1 { animation: orbit-c1 48s linear infinite; }
-      .sat-d1 { animation: orbit-d1 64s linear infinite reverse; }
+      .sat-a1 {
+        animation: orbit-a1 22s linear infinite;
+      }
+      .sat-b1 {
+        animation: orbit-b1 34s linear infinite reverse;
+      }
+      .sat-b2 {
+        animation: orbit-b1 34s linear infinite reverse;
+        animation-delay: -17s;
+      }
+      .sat-c1 {
+        animation: orbit-c1 48s linear infinite;
+      }
+      .sat-d1 {
+        animation: orbit-d1 64s linear infinite reverse;
+      }
 
-      @keyframes orbit-a1 { from { transform: rotateZ(0deg) translateX(110px) rotateZ(0deg); } to { transform: rotateZ(360deg) translateX(110px) rotateZ(-360deg); } }
-      @keyframes orbit-b1 { from { transform: rotateZ(0deg) translateX(155px) rotateZ(0deg); } to { transform: rotateZ(360deg) translateX(155px) rotateZ(-360deg); } }
-      @keyframes orbit-c1 { from { transform: rotateZ(0deg) translateX(200px) rotateZ(0deg); } to { transform: rotateZ(360deg) translateX(200px) rotateZ(-360deg); } }
-      @keyframes orbit-d1 { from { transform: rotateZ(0deg) translateX(240px) rotateZ(0deg); } to { transform: rotateZ(360deg) translateX(240px) rotateZ(-360deg); } }
+      @keyframes orbit-a1 {
+        from {
+          transform: rotateZ(0deg) translateX(110px) rotateZ(0deg);
+        }
+        to {
+          transform: rotateZ(360deg) translateX(110px) rotateZ(-360deg);
+        }
+      }
+      @keyframes orbit-b1 {
+        from {
+          transform: rotateZ(0deg) translateX(155px) rotateZ(0deg);
+        }
+        to {
+          transform: rotateZ(360deg) translateX(155px) rotateZ(-360deg);
+        }
+      }
+      @keyframes orbit-c1 {
+        from {
+          transform: rotateZ(0deg) translateX(200px) rotateZ(0deg);
+        }
+        to {
+          transform: rotateZ(360deg) translateX(200px) rotateZ(-360deg);
+        }
+      }
+      @keyframes orbit-d1 {
+        from {
+          transform: rotateZ(0deg) translateX(240px) rotateZ(0deg);
+        }
+        to {
+          transform: rotateZ(360deg) translateX(240px) rotateZ(-360deg);
+        }
+      }
 
       @media (prefers-reduced-motion: reduce) {
-        .ring, .satellite { animation: none !important; }
-        .orbit-system { transition: none !important; transform: translate(-50%, -50%) !important; }
-        .center-text .title, .center-text .desc { animation: none !important; opacity: 1 !important; }
-        .desc-cursor { display: none !important; }
+        .ring,
+        .satellite {
+          animation: none !important;
+        }
+        .orbit-system {
+          transition: none !important;
+          transform: translate(-50%, -50%) !important;
+        }
+        .center-text .title,
+        .center-text .desc {
+          animation: none !important;
+          opacity: 1 !important;
+        }
+        .desc-cursor {
+          display: none !important;
+        }
       }
 
       /* ===== TABLET (769px - 1024px): content-driven height, ~70-80vh ===== */
@@ -246,15 +360,21 @@
           gap: 2.5rem;
           padding: 0 2rem;
         }
-        .photo-col { order: 1; }
+        .photo-col {
+          order: 1;
+        }
         .orbit-col {
           order: 2;
           width: 380px;
           height: 380px;
           max-width: 380px;
         }
-        .ring-4 { display: none; }
-        .sat-d1 { display: none; }
+        .ring-4 {
+          display: none;
+        }
+        .sat-d1 {
+          display: none;
+        }
       }
 
       /* ===== MOBILE (below 768px): no 100vh, content-driven, compact ===== */
@@ -272,8 +392,14 @@
         }
 
         /* order: photo -> name -> title -> description */
-        .photo-col { order: 1; }
-        .photo-frame { width: 140px; height: 176px; border-radius: 20px; }
+        .photo-col {
+          order: 1;
+        }
+        .photo-frame {
+          width: 140px;
+          height: 176px;
+          border-radius: 20px;
+        }
 
         .orbit-col {
           order: 2;
@@ -283,16 +409,26 @@
           margin: 0 auto;
         }
 
-        .center-text { max-width: 100%; padding: 0; }
+        .center-text {
+          max-width: 100%;
+          padding: 0;
+        }
         .center-text h1 {
           font-size: clamp(1.6rem, 8vw, 2rem);
         }
         .center-text .desc {
           animation-delay: 0.7s;
         }
-        .center-text .title { animation-delay: 0.3s; }
+        .center-text .title {
+          animation-delay: 0.3s;
+        }
 
-        .ring-3, .ring-4, .sat-c1, .sat-d1 { display: none; }
+        .ring-3,
+        .ring-4,
+        .sat-c1,
+        .sat-d1 {
+          display: none;
+        }
       }
     </style>
   </head>
@@ -302,9 +438,11 @@
       <div class="hero-inner">
         <!-- LEFT: photo -->
         <div class="photo-col">
+          {% if intro and intro.photo %}
           <div class="photo-frame">
             <img src="{{ intro.photo.url }}" alt="{{ intro.name }}" />
           </div>
+          {% endif %}
         </div>
 
         <!-- RIGHT: orbit system with text centered inside -->
@@ -319,9 +457,18 @@
             <div class="ring ring-4"><div class="satellite sat-d1"></div></div>
           </div>
           <div class="center-text">
-            <h1>{{intro.name}}</h1>
-            <h2 class="title">{{intro.title}}</h2>
-            <p class="desc"><span class="desc-text" data-full="{{intro.description}}"></span><span class="desc-cursor"></span></p>
+            <h1>{{ intro.name|default:"Your Name" }}</h1>
+
+            <h1 class="title">{{ intro.title|default:"Software Engineer" }}</h1>
+
+            <p class="desc">
+              <span
+                class="desc-text"
+                data-full="{{ intro.description|default:'' }}"
+              >
+              </span>
+              <span class="desc-cursor"></span>
+            </p>
           </div>
         </div>
       </div>
@@ -332,13 +479,17 @@
         const hero = document.getElementById("hero");
         const system = document.getElementById("orbitSystem");
 
-        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
         if (reduceMotion) return;
 
         const BASE_TILT = 60;
         const MAX_TILT = 25;
-        let targetX = 0, targetY = 0;
-        let currentX = 0, currentY = 0;
+        let targetX = 0,
+          targetY = 0;
+        let currentX = 0,
+          currentY = 0;
         const EASE = 0.08;
 
         hero.addEventListener("mousemove", (e) => {
@@ -370,8 +521,11 @@
         const cursorEl = document.querySelector(".desc-cursor");
         if (!textEl) return;
 
-        const full = textEl.getAttribute("data-full") || textEl.textContent.trim();
-        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const full =
+          textEl.getAttribute("data-full") || textEl.textContent.trim();
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
 
         if (reduceMotion || !full) {
           textEl.textContent = full;
