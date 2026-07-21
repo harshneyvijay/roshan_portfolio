@@ -103,13 +103,6 @@ class SkillCategory(models.Model):
 
 class Skill(models.Model):
 
-    LEVEL_CHOICES = [
-        ('Beginner', 'Beginner'),
-        ('Intermediate', 'Intermediate'),
-        ('Advanced', 'Advanced'),
-        ('Proficient', 'Proficient'),
-    ]
-
 
     category = models.ForeignKey(
         SkillCategory,
@@ -119,16 +112,7 @@ class Skill(models.Model):
         blank=True
     )
 
-
     name = models.CharField(max_length=100)
-
-
-    level = models.CharField(
-        max_length=20,
-        choices=LEVEL_CHOICES,
-        default='Beginner'
-    )
-
 
     def __str__(self):
         return f"{self.name} ({self.level})"
