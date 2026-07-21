@@ -63,15 +63,15 @@ from .models import Skill, SkillCategory
 
 @admin.register(SkillCategory)
 class SkillCategoryAdmin(admin.ModelAdmin):
-    list_display = ("name", "order")
+    list_display = ("name", "order",)
     ordering = ("order",)
 
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ("name", "category")
-    list_filter = ("category")
-    search_fields = ("name")
+    list_display = ("name", "category",)
+    list_filter = ("category",)
+    search_fields = ("name",)
 
 
 @admin.register(Document)
