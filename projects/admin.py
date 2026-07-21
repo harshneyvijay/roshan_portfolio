@@ -6,7 +6,6 @@ admin.site.site_title = "Portfolio Admin"
 admin.site.index_title = "Manage Your Portfolio"
 
 from .models import (
-    Intro,
     Project,
     Education,
     Skill,
@@ -18,8 +17,6 @@ from .models import (
     Skill, 
     SkillCategory
 )
-
-admin.site.register(Intro)
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
@@ -61,7 +58,6 @@ class EducationAdmin(admin.ModelAdmin):
     )
 
 
-from django.contrib import admin
 from .models import Skill, SkillCategory
 
 
@@ -76,6 +72,8 @@ class SkillAdmin(admin.ModelAdmin):
     list_display = ("name", "category", "level")
     list_filter = ("category", "level")
     search_fields = ("name",)
+
+
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
     list_display = (
