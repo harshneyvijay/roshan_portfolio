@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orbital Hero</title>
     <style>
       html, body { margin: 0; overflow-x: hidden; }
@@ -102,22 +103,55 @@
         color: #000000;
         text-shadow: 0 0 40px rgba(248, 165, 56, 0.352);
         margin: 0;
-        font-size: 2.75rem;
+        font-size: clamp(1.9rem, 4vw, 2.75rem);
       }
 
       .center-text .title {
         color: #2e2c2c;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        font-size: 1rem;
+        font-size: clamp(0.85rem, 2vw, 1rem);
         margin-top: 0.75rem;
+        opacity: 0;
+        animation: fade-up 0.6s ease forwards;
+        animation-delay: 0.3s;
       }
 
       .center-text .desc {
         color: #c76f1d;
         margin: 1rem 0 0;
-        font-size: 1rem;
+        font-size: clamp(0.9rem, 2vw, 1rem);
         line-height: 1.6;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        opacity: 0;
+        animation: fade-in-desc 0.3s ease forwards;
+        animation-delay: 0.6s;
+      }
+
+      .desc-cursor {
+        display: inline-block;
+        width: 2px;
+        height: 1em;
+        margin-left: 2px;
+        vertical-align: -0.15em;
+        background: #c76f1d;
+        animation: blink-caret 0.85s step-end infinite;
+      }
+      .desc-cursor.done { animation: blink-caret 0.85s step-end 4; opacity: 0; animation-fill-mode: forwards; }
+
+      @keyframes blink-caret {
+        from, to { opacity: 1; }
+        50% { opacity: 0; }
+      }
+      @keyframes fade-in-desc {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes fade-up {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       .orbit-system {
@@ -197,12 +231,67 @@
       @media (prefers-reduced-motion: reduce) {
         .ring, .satellite { animation: none !important; }
         .orbit-system { transition: none !important; transform: translate(-50%, -50%) !important; }
+        .center-text .title, .center-text .desc { animation: none !important; opacity: 1 !important; }
+        .desc-cursor { display: none !important; }
       }
 
-      @media (max-width: 900px) {
-        .hero-inner { flex-direction: column; padding: 2rem 1.5rem; gap: 1.5rem; }
+      /* ===== TABLET (769px - 1024px): content-driven height, ~70-80vh ===== */
+      @media (max-width: 1024px) and (min-width: 769px) {
+        .hero {
+          min-height: 78vh;
+          padding: 3rem 0;
+        }
+        .hero-inner {
+          flex-direction: column;
+          gap: 2.5rem;
+          padding: 0 2rem;
+        }
         .photo-col { order: 1; }
-        .orbit-col { order: 2; width: 320px; height: 320px; max-width: 320px; }
+        .orbit-col {
+          order: 2;
+          width: 380px;
+          height: 380px;
+          max-width: 380px;
+        }
+        .ring-4 { display: none; }
+        .sat-d1 { display: none; }
+      }
+
+      /* ===== MOBILE (below 768px): no 100vh, content-driven, compact ===== */
+      @media (max-width: 768px) {
+        .hero {
+          min-height: 0;
+          height: auto;
+          display: block;
+          padding: 28px 0 32px;
+        }
+        .hero-inner {
+          flex-direction: column;
+          padding: 0 1.25rem;
+          gap: 28px;
+        }
+
+        /* order: photo -> name -> title -> description */
+        .photo-col { order: 1; }
+        .photo-frame { width: 140px; height: 176px; border-radius: 20px; }
+
+        .orbit-col {
+          order: 2;
+          width: 100%;
+          max-width: 280px;
+          height: 280px;
+          margin: 0 auto;
+        }
+
+        .center-text { max-width: 100%; padding: 0; }
+        .center-text h1 {
+          font-size: clamp(1.6rem, 8vw, 2rem);
+        }
+        .center-text .desc {
+          animation-delay: 0.7s;
+        }
+        .center-text .title { animation-delay: 0.3s; }
+
         .ring-3, .ring-4, .sat-c1, .sat-d1 { display: none; }
       }
     </style>
@@ -232,7 +321,7 @@
           <div class="center-text">
             <h1>{{intro.name}}</h1>
             <h2 class="title">{{intro.title}}</h2>
-            <p class="desc">{{intro.description}}</p>
+            <p class="desc"><span class="desc-text" data-full="{{intro.description}}"></span><span class="desc-cursor"></span></p>
           </div>
         </div>
       </div>
@@ -274,6 +363,38 @@
           requestAnimationFrame(animate);
         }
         requestAnimationFrame(animate);
+      })();
+
+      (function () {
+        const textEl = document.querySelector(".desc-text");
+        const cursorEl = document.querySelector(".desc-cursor");
+        if (!textEl) return;
+
+        const full = textEl.getAttribute("data-full") || textEl.textContent.trim();
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (reduceMotion || !full) {
+          textEl.textContent = full;
+          if (cursorEl) cursorEl.remove();
+          return;
+        }
+
+        textEl.textContent = "";
+        let i = 0;
+        const SPEED = 22;
+        const START_DELAY = 600;
+
+        function type() {
+          if (i < full.length) {
+            textEl.textContent += full.charAt(i);
+            i++;
+            setTimeout(type, SPEED);
+          } else if (cursorEl) {
+            cursorEl.classList.add("done");
+          }
+        }
+
+        setTimeout(type, START_DELAY);
       })();
     </script>
   </body>
