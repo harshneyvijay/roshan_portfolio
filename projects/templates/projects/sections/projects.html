@@ -3,12 +3,21 @@
     <div class="flex items-center justify-between mb-10">
       <h2 class="text-4xl font-black text-black">Projects</h2>
 
-      <a
-        href="{% url 'projects' %}"
-        class="px-5 py-2 rounded-xl bg-orange-500 text-white hover:bg-orange-600 hover:text-black font-semibold"
-      >
-        View All →
-      </a>
+<a
+  href="{% url 'projects' %}"
+  class="
+    inline-flex items-center gap-2
+    px-7 py-3
+    rounded-xl
+    bg-orange-500
+    text-white
+    shadow-[8px_8px_20px_#cbc5b9,-5px_-5px_15px_#ffffff]
+    transition-all duration-300
+    hover:-translate-y-1
+  "
+>
+  View All →
+</a>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
