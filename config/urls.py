@@ -16,8 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import RedirectView
+from django.conf import settings
 
 urlpatterns = [
+    # Intercept favicon before your dynamic routes catch it
+    path(
+        'favicon.ico', 
+        RedirectView.as_view(url=settings.STATIC_URL + 'favicon.ico')
+        ),
+
     path(
         'admin/',
         admin.site.urls
