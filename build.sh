@@ -1,10 +1,11 @@
-#!/usr/bin/env bash
-
+#!/bin/bash
 set -o errexit
 
+# Install dependencies (including Cloudinary and Supabase drivers)
 pip install -r requirements.txt
 
+# Upload assets to Cloudinary
 python manage.py collectstatic --no-input
 
-python manage.py makemigrations
+# Safely push database schemas to Supabase
 python manage.py migrate
